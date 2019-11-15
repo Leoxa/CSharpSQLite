@@ -127,21 +127,22 @@ namespace ConsoleApp1
                 return;
             }
             SQLiteCommand comszam = conn.CreateCommand();
-            comszam.CommandText = @"SELECT count(*) FROM asd
+            comszam.CommandText = @"SELECT count(id) FROM asd
                                         WHERE merete < @merete;";
             comszam.Parameters.AddWithValue("@merete", szam);
             using (var reader = comszam.ExecuteReader())
             {
                 while (reader.Read())
-                {                 
-
+                {
+                    int merete = reader.GetInt32(0);
+                    Console.WriteLine($"{merete}db");
                 }
             }
             
             //-------nev valtoztatas--------------
             Console.WriteLine("Kérem az id-t:");
-            int i;
-            if (!int.TryParse(Console.ReadLine(), out i))
+            int ix;
+            if (!int.TryParse(Console.ReadLine(), out ix))
             {
                 return;
             }
@@ -153,7 +154,7 @@ namespace ConsoleApp1
             comnnev.CommandText = @"UPDATE asd 
                                   SET nev = @ujnev
                                   WHERE id = @id;";
-            comnnev.Parameters.AddWithValue("@id", i);
+            comnnev.Parameters.AddWithValue("@id", ix);
             comnnev.Parameters.AddWithValue("@ujnev", ujnev);
 
 
